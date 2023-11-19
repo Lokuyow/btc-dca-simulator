@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ビットコイン積立シミュレーション</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>もし◯年◯月から毎月◯万円ビットコインを積み立てていたら<br>
+            あなたは今◯◯万円持っています！<br>
+            ツール</h1>
+            <form id="investmentForm">
+                <label for="startDate">購入開始日:</label>
+                <input type="date" id="startDate" required>
+
+                <label for="amount">毎月の購入金額 (円):</label>
+                <input type="number" id="amount" required>
+
+                <button type="submit">シミュレート</button>
+            </form>
+
+            <div id="results">
+                <!-- 結果はここに表示されます -->
+            </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
