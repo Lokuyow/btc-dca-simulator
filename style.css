@@ -15,7 +15,12 @@ body {
     background-color: var(--bg-color);
     color: var(--main-text-color);
     text-align: center;
-    margin: 0 12px;
+    margin: 0 16px;
+}
+
+a,
+a:visited {
+    color: var(--main-text-color);
 }
 
 .page-container {
@@ -29,15 +34,15 @@ body {
 }
 
 .title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: bold;
     margin: 20px 0;
 }
 
 form {
     display: grid;
-    grid-template-columns: 70px minmax(100px, 500px);
-    grid-template-rows: 40px 40px 40px;
+    grid-template-columns: 80px minmax(100px, 500px);
+    grid-template-rows: 50px 50px 50px;
     gap: 10px;
     justify-content: center;
     align-items: center;
@@ -46,11 +51,12 @@ form {
 
 input[type="date"],
 input[type="number"] {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     color: var(--input-text-color);
     background-color: var(--input-bg-color);
     text-align: center;
     border: none;
+    border-radius: 0;
     height: 100%;
     width: 100%;
     margin: 0;
@@ -61,7 +67,7 @@ button {
     background-color: var(--accent-color);
     grid-column: span 2;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     border: 0;
     border-radius: 0;
     height: 100%;
@@ -77,32 +83,32 @@ button:hover {
 }
 
 label {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 p {
-    margin: 4px 0;
+    margin: 6px 0;
 }
 
 .results-header {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
     margin: 38px 0 24px;
 }
 
 .results-text {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: normal;
 }
 
 .results-important {
     color: var(--input-text-color);
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
 .results-btc {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: normal;
 }
 

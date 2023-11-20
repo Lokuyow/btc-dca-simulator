@@ -31,12 +31,10 @@ function displayResults(data, monthlyAmount, startDate) {
         processInvestment(new Date(date), value);
     });
 
-    const profit = totalValue - totalInvestment;
-    const profitRate = (profit / totalInvestment) * 100;
-    const profitRateSign = profitRate > 0 ? "+" : "";
+    const investmentMultiple = totalValue / totalInvestment;
     const roundedTotalValue = Math.round(totalValue);
 
-    updateResultsDisplay(investmentCount, totalInvestment, roundedTotalValue, profitRateSign, profitRate, totalBitcoinPurchased);
+    updateResultsDisplay(investmentCount, totalInvestment, roundedTotalValue, investmentMultiple, totalBitcoinPurchased);
 
     function processInvestment(date, value) {
         const year = date.getFullYear();
@@ -54,13 +52,13 @@ function displayResults(data, monthlyAmount, startDate) {
         }
     }
 
-    function updateResultsDisplay(count, investment, value, sign, rate, btc) {
+    function updateResultsDisplay(count, investment, value, multiple, btc) {
         document.getElementById('results').innerHTML = `
             <h2 class="results-header">結果</h2>
             <p class="results-text">購入回数：${count} 回</p>
             <p class="results-text">総購入金額：${investment.toLocaleString('ja-JP')} 円</p>
             <p class="results-important">現在の評価額：${value.toLocaleString('ja-JP')} 円</p>
-            <p class="results-important">利益率：${sign}${rate.toFixed(2)}%</p>
+            <p class="results-important">総購入金額から：${multiple.toFixed(2)}倍</p>
             <p class="results-btc">保有BTC：${btc.toFixed(8)} BTC</p>
         `;
     }
