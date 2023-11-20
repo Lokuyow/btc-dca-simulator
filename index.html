@@ -1,30 +1,48 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<head>
-    <meta charset="UTF-8">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+
     <title>ビットコイン積立シミュレーション</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ビットコインの円建てドルコスト平均法シミュレーションサイト">
+
 </head>
 
 <body>
-    <div class="container">
-        <h2>もし◯年◯月から毎月◯万円ビットコインを積み立てていたら<br>
-            あなたは今◯◯万円持っています！<br>
-            ツール</h1>
+    <div class="page-container">
+        <div class="content">
+            <div class="title">
+                もし◯年◯月から毎月◯万円<br>
+                ビットコインを積み立てていたら<br>
+                あなたは今◯◯万円持っています<br>
+                ツール
+            </div>
+
             <form id="investmentForm">
-                <label for="startDate">購入開始日:</label>
-                <input type="date" id="startDate" required>
-
-                <label for="amount">毎月の購入金額 (円):</label>
-                <input type="number" id="amount" required>
-
+                <label for="startDate">開始日</label>
+                <input type="date" id="startDate" value="2020-01-01" min="2013-04-28" required>
+                <label for="amount">金額 (円)</label>
+                <input type="number" id="amount" value="10000" required>
                 <button type="submit">シミュレート</button>
             </form>
 
-            <div id="results">
-                <!-- 結果はここに表示されます -->
+            <div id="results" class="results-container">
+                <!-- 結果 -->
             </div>
+        </div>
+
+        <div class="flex-ref">
+            <div class="reference">
+                サイト制作：<a href="https://lokuyow.github.io" target="_blank">ロクヨウ</a><br>
+                ソースコード：<a href="https://github.com/Lokuyow/btc-dca-simulator" target="_blank">GitHub</a><br>
+                データ提供：<a href="https://www.coingecko.com" target="_blank">CoinGecko</a><br>
+            </div>
+        </div>
     </div>
 
     <script src="main.js"></script>
