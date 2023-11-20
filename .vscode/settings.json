@@ -1,7 +1,0 @@
-{
-    "livePreview.autoRefreshPreview": "On Changes to Saved Files",
-    "livePreview.serverKeepAliveAfterEmbeddedPreviewClose": 0,
-    "livePreview.showServerStatusNotifications": true,
-    "livePreview.portNumber": 3001,
-    "gitlens.views.repositories.autoRefresh": true
-}
