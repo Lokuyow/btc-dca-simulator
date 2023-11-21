@@ -34,15 +34,23 @@ a:visited {
 }
 
 .title {
-    font-size: 1.4rem;
+    font-size: 2rem;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 18px 0 12px 0;
+}
+
+.subject {
+    font-size: 1rem;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    margin: 12px 0;
+    padding: 0;
 }
 
 form {
     display: grid;
     grid-template-columns: 80px minmax(100px, 500px);
-    grid-template-rows: 50px 50px 50px;
+    grid-template-rows: 44px auto 44px 44px;
     gap: 10px;
     justify-content: center;
     align-items: center;
@@ -51,7 +59,7 @@ form {
 
 input[type="date"],
 input[type="number"] {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     color: var(--input-text-color);
     background-color: var(--input-bg-color);
     text-align: center;
@@ -61,6 +69,20 @@ input[type="number"] {
     width: 100%;
     margin: 0;
     padding: 0;
+}
+
+.example-d {
+    font-size: 0.9rem;
+    grid-column: span 2;
+    display: inline-block;
+    text-align: left;
+}
+
+.example-s {
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: -8px;
 }
 
 button {
@@ -91,25 +113,43 @@ p {
 }
 
 .results-header {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: bold;
-    margin: 38px 0 24px;
+    margin: 28px 0 12px 0;
 }
 
 .results-text {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: normal;
 }
 
 .results-important {
-    color: var(--input-text-color);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
 }
 
 .results-btc {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: normal;
+}
+
+.detail-history-d {
+    display: inline-block;
+}
+
+.detail-history-s {
+    cursor: pointer;
+    margin: 24px 0 18px 0;
+}
+
+td {
+    font-family: 'Courier New', monospace;
+    white-space: pre;
+    text-align: right;
+}
+
+td:nth-child(2) {
+    padding: 0 8px;
 }
 
 .flex-ref {
@@ -128,7 +168,7 @@ p {
     :root {
         --bg-color: #ffffff;
         --input-bg-color: #EDEDED;
-        --main-text-color: #4D4D4D;
+        --main-text-color: #424242;
         --input-text-color: #000000;
     }
 }
@@ -139,5 +179,14 @@ p {
         --input-bg-color: #363636;
         --main-text-color: #e6e6e6;
         --input-text-color: #ffffff;
+    }
+}
+
+@media not all and (min-resolution:.001dpcm) { 
+    @supports (-webkit-appearance: none) {
+        input[type="date"] {
+            width: 100%; /* Safari用の幅の調整 */
+            -webkit-appearance: none; /* Safariのデフォルトスタイリングを無効化 */
+        }
     }
 }

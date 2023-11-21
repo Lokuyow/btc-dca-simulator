@@ -9,7 +9,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ビットコイン（Bitcoin, BTC）のドルコスト平均法に基づく積み立て効果をシミュレーション。毎月の投資額と過去の価格データを用いて、長期的なビットコイン投資のパフォーマンスを評価します。">
+    <meta name="description"
+        content="ビットコイン（Bitcoin, BTC）のドルコスト平均法に基づく積み立て効果をシミュレーション。毎月の投資額と過去の価格データを用いて、長期的なビットコイン投資のパフォーマンスを評価します。">
 
 </head>
 
@@ -17,15 +18,24 @@
     <div class="page-container">
         <div class="content">
             <div class="title">
-                もし◯年◯月から毎月◯万円<br>
-                ビットコインを積み立てていたら<br>
-                あなたは今◯◯万円持っています<br>
-                ツール
-            </div>
+                そういうのはルノアールでやれ！
 
+            </div>
+            <div class="subject">
+                もし<wbr>◯年◯月から<wbr>毎月◯万円<wbr>ビットコインを<wbr>積み立てていたら、<wbr>あなたは<wbr>今<wbr>◯◯万円<wbr>持っていました。
+            </div>
             <form id="investmentForm">
                 <label for="startDate">開始日</label>
                 <input type="date" id="startDate" value="2018-01-01" min="2013-04-28" required>
+                <details class="example-d">
+                    <summary class="example-s">例えば…</summary>
+                    <ul>
+                        <li>ビットコインを知った日</li>
+                        <li>買うか悩んでやめた日</li>
+                        <li>口座開設したけど結局何もしなかった日</li>
+                        <li>買ったけど売ってしまった日</li>
+                    </ul>
+                </details>
                 <label for="amount">金額 (円)</label>
                 <input type="number" id="amount" value="10000" required>
                 <button type="submit">シミュレート</button>
