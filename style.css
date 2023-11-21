@@ -59,6 +59,7 @@ form {
 
 input[type="date"],
 input[type="number"] {
+    -webkit-appearance: none;
     font-size: 1.7rem;
     color: var(--input-text-color);
     background-color: var(--input-bg-color);
@@ -179,14 +180,5 @@ td:nth-child(2) {
         --input-bg-color: #363636;
         --main-text-color: #e6e6e6;
         --input-text-color: #ffffff;
-    }
-}
-
-@media not all and (min-resolution:.001dpcm) { 
-    @supports (-webkit-appearance: none) {
-        input[type="date"] {
-            width: 100%; /* Safari用の幅の調整 */
-            -webkit-appearance: none; /* Safariのデフォルトスタイリングを無効化 */
-        }
     }
 }
