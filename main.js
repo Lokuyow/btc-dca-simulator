@@ -11,10 +11,20 @@ function setStartDateMax() {
 function setupEventHandlers() {
     const amountInput = document.getElementById('amount');
     amountInput.addEventListener('focus', selectInputText);
+    amountInput.addEventListener('blur', formatAmountInput);
     amountInput.addEventListener('keydown', closeKeyboardOnEnter);
 
     const form = document.getElementById('investmentForm');
     form.addEventListener('submit', handleFormSubmit);
+}
+
+function formatAmountInput(event) {
+    const numericValue = event.target.value.replace(/\D/g, '');
+    if (numericValue) {
+        event.target.value = parseInt(numericValue, 10).toLocaleString('ja-JP');
+    } else {
+        event.target.value = '';
+    }
 }
 
 function selectInputText(event) {
@@ -31,7 +41,7 @@ function closeKeyboardOnEnter(event) {
 function handleFormSubmit(event) {
     event.preventDefault();
     const startDate = document.getElementById('startDate').value;
-    const monthlyAmount = document.getElementById('amount').value;
+    const monthlyAmount = parseInt(document.getElementById('amount').value.replace(/,/g, ''), 10);
     fetchBitcoinData(startDate, monthlyAmount);
 }
 
