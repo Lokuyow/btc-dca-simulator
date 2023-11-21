@@ -1,6 +1,7 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "もしもびっとこ",
+    "short_name": "もしもびっとこ",
+    "description": "ビットコイン（Bitcoin, BTC）のドルコスト平均法に基づく積み立て効果をシミュレーション。過去の価格データを用いて、長期的なビットコイン投資のパフォーマンスを評価します。",
     "icons": [
         {
             "src": "android-chrome-192x192.png",
@@ -13,7 +14,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
+    "theme_color": "#f7931a",
     "background_color": "#ffffff",
     "display": "standalone"
 }
