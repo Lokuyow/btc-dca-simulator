@@ -57,7 +57,7 @@ a:visited {
     width: auto;
     max-width: 580px;
     margin: auto;
-    margin-top: 14px;
+    margin-top: 12px;
 }
 
 .example-s {
@@ -65,11 +65,10 @@ a:visited {
     cursor: pointer;
     width: max-content;
     margin-left: 10px;
-    margin-top: -8px;
 }
 
 .example-ul1 {
-    margin: 12px 0 20px 0;
+    margin: 8px 0 20px 0;
     padding-left: 30px;
 
     & li {
@@ -120,9 +119,11 @@ div.purchaseFrequency {
     margin: 0 20px;
 }
 
+.purchaseFrequency-label,
 #monthly,
 #weekly,
 #daily {
+    cursor: pointer;
     margin: 0;
     padding: 0;
 }
