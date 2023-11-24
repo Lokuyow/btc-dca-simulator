@@ -213,13 +213,13 @@ td {
 }
 
 td:nth-child(2) {
-    padding: 0 12px;
+    padding: 0 14px;
 }
 
 .flex-ref {
     display: flex;
     justify-content: flex-end;
-    margin: 32px 0 12px 0;
+    margin: 32px 0 14px 0;
 }
 
 .reference {
