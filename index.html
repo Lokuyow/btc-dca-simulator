@@ -50,21 +50,64 @@
             <div class="subject">
                 もし<wbr>あの日から<wbr>毎月<wbr>ビットコインを<wbr>積み立てていたら
             </div>
-            <form id="investmentForm">
-                <details class="example-d">
-                    <summary class="example-s">例えば…</summary>
-                    <ul>
-                        <li>ビットコインを知った日</li>
-                        <li>買うか悩んでやめた日</li>
-                        <li>口座開設したけど結局何もしなかった日</li>
-                        <li>買ったけど手放してしまった日</li>
+            <details class="example-d">
+                <summary class="example-s">例えば…</summary>
+                <ul class="example-ul1">
+                    <li>ビットコインを知った日</li>
+                    <ul class="example-ul2">
+                        <li><div class="date-example">2014年2月28日</div>：マウントゴックス事件
+                        </li>
                     </ul>
-                </details>
+                    <li>買うか悩んでやめた日</li>
+                    <ul class="example-ul2">
+                        <li><div class="date-example">2017年12月7日</div>：～19年最高値
+                        </li>
+                        <li><div class="date-example">2018年1月26日</div>：コインチェック事件
+                        </li>
+                    </ul>
+                    <li>口座開設したけど結局何もしなかった日</li>
+                    <ul class="example-ul2">
+                        <li><div class="date-example">2020年2月20日</div>：コロナショック
+                        </li>
+                    </ul>
+                    <li>買ったけど手放してしまった日</li>
+                    <ul class="example-ul2">
+                        <li><div class="date-example">2021年11月9日</div>：20～23年最高値
+                        </li>
+                        <li><div class="date-example">2022年11月14日</div>：FTX事件
+                        </li>
+                    </ul>
+                </ul>
+            </details>
+            <form id="investmentForm">
+
+                <div class="purchaseFrequency" for="purchaseFrequency">間隔</div>
+                <div id="purchaseFrequency">
+                    <div class="radioButton">
+                        <input type="radio" id="monthly" name="purchaseFrequency" value="monthly" checked>
+                        <label for="monthly">毎月</label>
+                    </div>
+                    <div class="radioButton">
+                        <input type="radio" id="weekly" name="purchaseFrequency" value="weekly">
+                        <label for="weekly">毎週</label>
+                    </div>
+                    <div class="radioButton">
+                        <input type="radio" id="daily" name="purchaseFrequency" value="daily">
+                        <label for="daily">毎日</label>
+                    </div>
+                </div>
+
                 <label for="startDate">開始日</label>
                 <input type="date" id="startDate" value="2018-01-01" min="2013-04-28" required>
+
+                <label for="endDate">終了日</label>
+                <input type="date" id="endDate" min="2013-04-28" required style="visibility: hidden;">
+
                 <label for="amount">金額 (円)</label>
                 <input type="text" id="amount" value="10,000" inputmode="numeric" required>
+
                 <button type="submit">シミュレート</button>
+
             </form>
 
             <div id="results" class="results-container">
