@@ -108,9 +108,9 @@ button>* {
     text-align: right;
 }
 
-#investmentForm>*:nth-child(9) {
+/* #investmentForm>*:nth-child(9) {
     text-align: center;
-}
+} */
 
 label,
 div.purchaseFrequency {
@@ -149,6 +149,9 @@ input[type="text"] {
 }
 
 #submitBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #ffffff;
     background-color: var(--accent-color);
     grid-column: span 2;
@@ -187,8 +190,8 @@ input[type="text"] {
     border: 6px solid #ffffff;
     border-top: 6px solid var(--accent-color);
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     animation: spin 1s linear infinite;
 }
 
