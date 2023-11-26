@@ -23,6 +23,10 @@ a:visited {
     color: var(--main-text-color);
 }
 
+button>* {
+    pointer-events: none;
+}
+
 .page-container {
     display: flex;
     flex-direction: column;
@@ -153,16 +157,11 @@ input[type="text"] {
     border: 0;
     border-radius: 0;
     height: 100%;
-    transition: transform 0.03s ease;
     position: relative;
 }
 
 #submitBtn:active {
-    transform: scale(0.97);
-}
-
-#submitBtn:hover {
-    background-color: var(--accent-color);
+    transform: scale(0.96);
 }
 
 @keyframes spin {
@@ -182,7 +181,7 @@ input[type="text"] {
     left: 46%;
     transform: translate(-50%, -50%);
     border: 6px solid #ffffff;
-    border-top: 6px solid #3498db;
+    border-top: 6px solid var(--accent-color);
     border-radius: 50%;
     width: 18px;
     height: 18px;

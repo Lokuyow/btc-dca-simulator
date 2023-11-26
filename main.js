@@ -75,9 +75,13 @@ function showLoadingAnimation() {
     const submitButton = document.getElementById('submitBtn');
     const spinner = submitButton.querySelector('.spinner');
     const buttonText = submitButton.querySelector('.button-text');
-    submitButton.disabled = true;
     spinner.style.display = 'block'; // スピナーを表示
     buttonText.style.display = 'none'; // ボタンのテキストを非表示
+
+    // ボタンを非活性化するのを少し遅らせる
+    setTimeout(() => {
+        submitButton.disabled = true;
+    }, 100); // 100ミリ秒後に実行
 }
 
 // ローディングアニメーションを非表示
