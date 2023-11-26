@@ -4,6 +4,21 @@
     --accent-color: #f7931a;
 }
 
+* {
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+a,
+a:visited {
+    color: var(--main-text-color);
+}
+
+a:hover,
+.date-example:hover {
+    color: var(--accent-color);
+}
+
 html,
 body {
     height: 100%;
@@ -16,11 +31,6 @@ body {
     color: var(--main-text-color);
     text-align: center;
     margin: 0 16px;
-}
-
-a,
-a:visited {
-    color: var(--main-text-color);
 }
 
 button>* {
@@ -186,8 +196,8 @@ input[type="text"] {
     border: 6px solid #ffffff;
     border-top: 6px solid var(--accent-color);
     border-radius: 50%;
-    width: 15px;
-    height: 15px;
+    width: 24px;
+    height: 24px;
     animation: spin 1s linear infinite;
 }
 
