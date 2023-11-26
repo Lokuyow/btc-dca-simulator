@@ -144,7 +144,7 @@ input[type="text"] {
     padding: 0;
 }
 
-button {
+#submitBtn {
     color: #ffffff;
     background-color: var(--accent-color);
     grid-column: span 2;
@@ -154,14 +154,39 @@ button {
     border-radius: 0;
     height: 100%;
     transition: transform 0.03s ease;
+    position: relative;
 }
 
-button:active {
+#submitBtn:active {
     transform: scale(0.97);
 }
 
-button:hover {
+#submitBtn:hover {
     background-color: var(--accent-color);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    display: none;
+    position: absolute;
+    top: 15%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    border: 6px solid #ffffff;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: spin 0.5s linear infinite;
 }
 
 p {

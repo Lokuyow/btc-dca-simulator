@@ -63,10 +63,31 @@ function closeKeyboardOnEnter(event) {
 
 function handleFormSubmit(event) {
     event.preventDefault();
+    showLoadingAnimation(); // ローディングアニメーションを表示
     const startDate = document.getElementById('startDate').value;
     endDate = document.getElementById('endDate').value;
     const investmentAmount = parseInt(document.getElementById('amount').value.replace(/,/g, ''), 10);
     fetchBitcoinData(startDate, investmentAmount);
+}
+
+// ローディングアニメーションを表示
+function showLoadingAnimation() {
+    const submitButton = document.getElementById('submitBtn');
+    const spinner = submitButton.querySelector('.spinner');
+    const buttonText = submitButton.querySelector('.button-text');
+    submitButton.disabled = true;
+    spinner.style.display = 'block'; // スピナーを表示
+    buttonText.style.display = 'none'; // ボタンのテキストを非表示
+}
+
+// ローディングアニメーションを非表示
+function hideLoadingAnimation() {
+    const submitButton = document.getElementById('submitBtn');
+    const spinner = submitButton.querySelector('.spinner');
+    const buttonText = submitButton.querySelector('.button-text');
+    submitButton.disabled = false;
+    spinner.style.display = 'none'; // スピナーを非表示
+    buttonText.style.display = 'block'; // ボタンのテキストを表示
 }
 
 function fetchBitcoinData(startDate, investmentAmount) {
@@ -78,9 +99,17 @@ function fetchBitcoinData(startDate, investmentAmount) {
 
     fetch(apiUrl)
         .then(response => response.json())
-        .then(data => formatDailyData(data)) // データを整形
-        .then(formattedData => displayResults(formattedData, investmentAmount, startDate)) // 整形されたデータを使用
-        .catch(error => console.error('Error fetching data: ', error));
+        .then(data => formatDailyData(data))
+        .then(formattedData => {
+            setTimeout(() => { // 最低0.4秒間はローディング表示
+                displayResults(formattedData, investmentAmount, startDate);
+                hideLoadingAnimation(); // ローディングアニメーションを非表示
+            }, 400);
+        })
+        .catch(error => {
+            console.error('Error fetching data: ', error);
+            hideLoadingAnimation();
+        });
 }
 
 // データを整形

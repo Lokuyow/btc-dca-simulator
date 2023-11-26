@@ -55,26 +55,32 @@
                 <ul class="example-ul1">
                     <li>ビットコインを知った日</li>
                     <ul class="example-ul2">
-                        <li><div class="date-example">2014年2月28日</div>：マウントゴックス事件
+                        <li>
+                            <div class="date-example">2014年2月28日</div>：マウントゴックス事件
                         </li>
                     </ul>
                     <li>買うか悩んでやめた日</li>
                     <ul class="example-ul2">
-                        <li><div class="date-example">2017年12月7日</div>：～19年最高値
+                        <li>
+                            <div class="date-example">2017年12月7日</div>：～19年最高値
                         </li>
-                        <li><div class="date-example">2018年1月26日</div>：コインチェック事件
+                        <li>
+                            <div class="date-example">2018年1月26日</div>：コインチェック事件
                         </li>
                     </ul>
                     <li>口座開設したけど結局何もしなかった日</li>
                     <ul class="example-ul2">
-                        <li><div class="date-example">2020年2月20日</div>：コロナショック
+                        <li>
+                            <div class="date-example">2020年2月20日</div>：コロナショック
                         </li>
                     </ul>
                     <li>買ったけど手放してしまった日</li>
                     <ul class="example-ul2">
-                        <li><div class="date-example">2021年11月9日</div>：20～23年最高値
+                        <li>
+                            <div class="date-example">2021年11月9日</div>：20～23年最高値
                         </li>
-                        <li><div class="date-example">2022年11月14日</div>：FTX事件
+                        <li>
+                            <div class="date-example">2022年11月14日</div>：FTX事件
                         </li>
                     </ul>
                 </ul>
@@ -106,7 +112,10 @@
                 <label for="amount">金額 (円)</label>
                 <input type="text" id="amount" value="10,000" inputmode="numeric" required>
 
-                <button type="submit">シミュレート</button>
+                <button id="submitBtn" type="submit">
+                    <span class="button-text">シミュレート</span>
+                    <div class="spinner"></div>
+                </button>
 
             </form>
 
