@@ -186,7 +186,7 @@ input[type="text"] {
     border-radius: 50%;
     width: 18px;
     height: 18px;
-    animation: spin 0.5s linear infinite;
+    animation: spin 1s linear infinite;
 }
 
 p {
