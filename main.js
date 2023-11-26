@@ -73,9 +73,9 @@ function handleFormSubmit(event) {
 // ローディングアニメーションを表示
 function showLoadingAnimation() {
     const submitButton = document.getElementById('submitBtn');
-    const spinner = submitButton.querySelector('.spinner');
+    const spinnerWrapper = submitButton.querySelector('.spinner-wrapper'); // スピナーのラッパー要素を取得
     const buttonText = submitButton.querySelector('.button-text');
-    spinner.style.display = 'block'; // スピナーを表示
+    spinnerWrapper.style.display = 'block'; // スピナーラッパーを表示
     buttonText.style.display = 'none'; // ボタンのテキストを非表示
 
     // ボタンを非活性化するのを少し遅らせる
@@ -87,10 +87,10 @@ function showLoadingAnimation() {
 // ローディングアニメーションを非表示
 function hideLoadingAnimation() {
     const submitButton = document.getElementById('submitBtn');
-    const spinner = submitButton.querySelector('.spinner');
+    const spinnerWrapper = submitButton.querySelector('.spinner-wrapper'); // スピナーのラッパー要素を取得
     const buttonText = submitButton.querySelector('.button-text');
     submitButton.disabled = false;
-    spinner.style.display = 'none'; // スピナーを非表示
+    spinnerWrapper.style.display = 'none'; // スピナーラッパーを非表示
     buttonText.style.display = 'block'; // ボタンのテキストを表示
 }
 
