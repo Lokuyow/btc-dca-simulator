@@ -12,13 +12,11 @@ function setDefaultDates() {
 
 // イベントハンドラーの設定
 function setupEventHandlers() {
-    const amountInput = document.getElementById('amount');
-    amountInput.addEventListener('focus', selectInputText);
-    amountInput.addEventListener('blur', formatAmountInput);
-    amountInput.addEventListener('keydown', closeKeyboardOnEnter);
+    document.getElementById('amount').addEventListener('focus', selectInputText);
+    document.getElementById('amount').addEventListener('blur', formatAmountInput);
+    document.getElementById('amount').addEventListener('keydown', e => closeKeyboardOnEnter(e));
 
-    const form = document.getElementById('investmentForm');
-    form.addEventListener('submit', handleFormSubmit);
+    document.getElementById('investmentForm').addEventListener('submit', e => handleFormSubmit(e));
 }
 
 // ページ読み込み時の処理
@@ -67,7 +65,7 @@ function handleFormSubmit(event) {
     const startDate = document.getElementById('startDate').value;
     endDate = document.getElementById('endDate').value;
     const investmentAmount = parseInt(document.getElementById('amount').value.replace(/,/g, ''), 10);
-    fetchBitcoinData(startDate, investmentAmount);
+    fetchBitcoinData(startDate, endDate, investmentAmount);
 }
 
 // ローディングアニメーションを表示
@@ -94,138 +92,190 @@ function hideLoadingAnimation() {
     buttonText.style.display = 'block'; // ボタンのテキストを表示
 }
 
-function fetchBitcoinData(startDate, investmentAmount) {
-    const currentUnixTime = Math.floor(new Date().getTime() / 1000);
-    const startUnixTime = Math.floor(new Date(startDate).getTime() / 1000);
-    const apiUrl = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=jpy&from=${startUnixTime}&to=${currentUnixTime}`;
+// 最新のビットコイン価格を取得する関数
+async function fetchLatestPrice() {
+    const apiUrl = 'https://public.bitbank.cc/btc_jpy/ticker';
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return parseInt(data.data.last, 10); // 最終取引価格を返す
+    } catch (error) {
+        console.error('ビットコイン価格の取得に失敗しました:', error);
+        return 0; // エラー時は0を返す
+    }
+}
 
-    console.log("API URL: ", apiUrl);
+async function fetchLocalData(year) {
+    const response = await fetch(`data/${year}.json`);
+    return await response.json();
+}
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => formatDailyData(data))
-        .then(formattedData => {
-            setTimeout(() => { // 最低0.4秒間はローディング表示
-                displayResults(formattedData, investmentAmount, startDate);
-                hideLoadingAnimation(); // ローディングアニメーションを非表示
-            }, 400);
+function formatDailyDataBitBank(ohlcv) {
+    return {
+        prices: ohlcv.map(item => [item[5], item[0]]) // Unixタイムスタンプとオープン価格の配列に変換
+    };
+}
+
+// 各年のビットコイン価格を取得する関数
+async function fetchBitcoinData(startDate, endDate, investmentAmount) {
+    const startTime = Date.now();
+    const startYear = new Date(startDate).getFullYear();
+    const endYear = new Date(endDate).getFullYear();
+    const apiPromises = [];
+    const localDataPromises = [];
+
+    const latestPrice = await fetchLatestPrice();
+
+    // 2017年より前のデータをローカルから取得
+    for (let year = startYear; year < 2017 && year <= endYear; year++) {
+        localDataPromises.push(fetchLocalData(year));
+    }
+
+    // 2017年以降のデータをAPIから取得
+    for (let year = Math.max(startYear, 2017); year <= endYear; year++) {
+        const apiUrl = `https://public.bitbank.cc/btc_jpy/candlestick/1day/${year}`;
+        apiPromises.push(
+            fetch(apiUrl)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error fetching data for year ${year}:`, error);
+                    return null; // エラーが発生した場合はnullを返して処理を続ける
+                })
+        );
+    }
+
+    // すべてのプロミスが完了したら、データを結合して処理
+    Promise.all([...localDataPromises, ...apiPromises])
+        .then(results => {
+            const validResults = results.filter(result => result !== null);
+            const allData = validResults.flatMap(result => result.data ? result.data.candlestick[0].ohlcv : result);
+            const formattedData = formatDailyDataBitBank(allData);
+            displayResults(formattedData, investmentAmount, startDate, endDate, latestPrice);
         })
         .catch(error => {
             console.error('Error fetching data: ', error);
-            hideLoadingAnimation();
+        })
+        .finally(() => {
+            const elapsedTime = Date.now() - startTime; // 経過時間を計算
+            const delay = Math.max(250 - elapsedTime, 0);
+            setTimeout(hideLoadingAnimation, delay); // 計算した遅延時間後にローディングアニメーションを非表示にする
         });
 }
 
-// データを整形
-function formatDailyData(data) {
-    const dailyData = [];
-    let lastDate = "";
-
-    data.prices.forEach((item) => {
-        const date = new Date(item[0]);
-        const dateString = date.toISOString().split('T')[0]; // 日付をYYYY-MM-DD形式に変換
-
-        if (dateString !== lastDate) {
-            dailyData.push(item); // 各日付の最初のデータポイントを保存
-            lastDate = dateString;
-        }
-    });
-
-    return { prices: dailyData };
+function createPriceMap(prices) {
+    return prices.reduce((acc, [date, value]) => {
+        acc[new Date(date).toISOString().split("T")[0]] = value;
+        return acc;
+    }, {});
 }
 
-function displayResults(data, investmentAmount, startDate) {
-    let totalInvestment = 0, totalBitcoinPurchased = 0, totalValue = 0, investmentCount = 0;
+async function displayResults(data, investmentAmount, startDate, endDate) {
+    const latestPrice = await fetchLatestPrice();
+    const priceMap = createPriceMap(data.prices);
+    const { totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails } = processInvestments(investmentAmount, startDate, endDate, priceMap);
+    updateResultsDisplay(totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails, latestPrice);
+}
+
+function getNextInvestmentDate(currentDate, purchaseFrequency) {
+    let nextDate = new Date(currentDate);
+    if (purchaseFrequency === 'weekly') {
+        nextDate.setDate(currentDate.getDate() + 7);
+    } else if (purchaseFrequency === 'monthly') {
+        nextDate.setMonth(currentDate.getMonth() + 1);
+    } else {
+        nextDate.setDate(currentDate.getDate() + 1);
+    }
+    return nextDate;
+}
+
+function processInvestments(investmentAmount, startDate, endDate, priceMap) {
+    let totalInvestment = 0, totalBitcoinPurchased = 0, investmentCount = 0;
     let investmentDetails = "";
 
-    data.prices.forEach((price) => {
-        const [date, value] = price;
-        processInvestment(new Date(date), value);
-    });
+    let currentDate = new Date(startDate);
+    const endDateObj = new Date(endDate);
+    const purchaseFrequency = document.querySelector('input[name="purchaseFrequency"]:checked').value;
 
-    function processInvestment(date, value) {
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1; // JavaScriptの月は0から始まるため+1
-        const day = date.getDate();
-        const purchaseFrequencyElements = document.getElementsByName('purchaseFrequency');
-        let purchaseFrequency = 'monthly'; // デフォルト値
-        for (const element of purchaseFrequencyElements) {
-            if (element.checked) {
-                purchaseFrequency = element.value;
-                break;
+    while (currentDate <= endDateObj) {
+        const dateString = currentDate.toISOString().split("T")[0];
+
+        // 指定日、翌日、翌々日の価格をチェック
+        for (let i = 0; i <= 2; i++) {
+            let tryDate = new Date(currentDate);
+            tryDate.setDate(tryDate.getDate() + i);
+            const tryDateString = tryDate.toISOString().split("T")[0];
+            if (tryDateString in priceMap) {
+                const investmentDetail = calculateInvestmentDetails(tryDate, priceMap[tryDateString], investmentAmount);
+                const result = updateInvestmentResult(investmentDetail, investmentDetails, totalInvestment, totalBitcoinPurchased, investmentCount, investmentAmount);
+                totalInvestment = result.totalInvestment;
+                totalBitcoinPurchased = result.totalBitcoinPurchased;
+                investmentCount = result.investmentCount;
+                investmentDetails = result.investmentDetails;
+                break; // 価格が見つかったらその日で投資を行い、ループを抜ける
             }
         }
 
-        const investmentDay = new Date(startDate).getDate(); // startDateから日を取得
-        const startDayOfWeek = new Date(startDate).getDay(); // startDateの曜日
-
-        // 購入日が購入終了日以前であることを確認
-        if (date > new Date(endDate)) {
-            return; // 購入終了日を過ぎていたら処理を中止
-        }
-
-        let shouldInvest = false;
-        if (purchaseFrequency === 'daily') { // 毎日購入
-            shouldInvest = true;
-        } else if (purchaseFrequency === 'weekly' && date.getDay() === startDayOfWeek) { // 毎週購入
-            shouldInvest = true;
-        } else if (purchaseFrequency === 'monthly') { // 毎月購入
-            const daysInMonth = new Date(year, month, 0).getDate(); // 当月の日数を取得
-            if (day === Math.min(investmentDay, daysInMonth)) { // 指定日または月末
-                shouldInvest = true;
-            }
-        }
-
-        if (shouldInvest) {
-            const btcAmount = investmentAmount / value;
-            totalInvestment += parseInt(investmentAmount, 10);
-            totalBitcoinPurchased += btcAmount;
-            investmentCount++;
-
-            // 日付のフォーマットを "YYYY-MM-DD" にする
-            const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
-            // 価格を四捨五入して表示
-            const roundedValue = Math.round(value);
-
-            investmentDetails += `
-            <tr>
-                <td>${formattedDate}</td>
-                <td>${roundedValue.toLocaleString('ja-JP')}</td>
-                <td>${btcAmount.toFixed(8)}</td>
-            </tr>`;
-        }
+        // 次の購入可能日へ移動
+        currentDate = getNextInvestmentDate(currentDate, purchaseFrequency);
     }
 
-    totalValue = totalBitcoinPurchased * data.prices[data.prices.length - 1][1];
+    return { totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails };
+}
+
+function calculateInvestmentDetails(date, value, investmentAmount) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const btcAmount = investmentAmount / value;
+    return { year, month, day, btcAmount, value };
+}
+
+function updateInvestmentResult(investmentDetail, investmentDetails, totalInvestment, totalBitcoinPurchased, investmentCount, investmentAmount) {
+    const { year, month, day, btcAmount, value } = investmentDetail;
+    totalInvestment += investmentAmount;
+    totalBitcoinPurchased += btcAmount;
+    investmentCount += 1;
+
+    const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const roundedValue = Math.round(value);
+    investmentDetails += `
+    <tr>
+        <td>${formattedDate}</td>
+        <td>${roundedValue.toLocaleString('ja-JP')}</td>
+        <td>${btcAmount.toFixed(8)}</td>
+    </tr>`;
+
+    return { totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails };
+}
+
+function updateResultsDisplay(totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails, latestPrice) {
+    const totalValue = totalBitcoinPurchased * latestPrice;
     const investmentMultiple = totalValue / totalInvestment;
     const roundedTotalValue = Math.round(totalValue);
-
-    updateResultsDisplay(investmentCount, totalInvestment, roundedTotalValue, investmentMultiple, totalBitcoinPurchased, investmentDetails);
-
-    function updateResultsDisplay(count, investment, value, multiple, btc, details) {
-        document.getElementById('results').innerHTML = `
-            <h2 class="results-header">結果</h2>
-            <p class="results-text">購入回数：${count} 回</p>
-            <p class="results-text">総購入金額：${investment.toLocaleString('ja-JP')} 円</p>
-            <p class="results-important">現在の評価額：${value.toLocaleString('ja-JP')} 円</p>
-            <p class="results-important">倍率：${multiple.toFixed(2)}倍</p>
-            <p class="results-btc">保有BTC：${btc.toFixed(8)} BTC</p>
-            <details class="detail-history-d">
-            <summary class="detail-history-s">購入履歴の詳細</summary>
-            <table>
-                <thead>
-                    <tr>
-                        <th>日付</th>
-                        <th>BTC価格 (円)</th>
-                        <th>購入量 (BTC)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${details}
-                </tbody>
-            </table>
-        </details>
-    `;
-    }
+    document.getElementById('results').innerHTML = `
+    <h2 class="results-header">結果</h2>
+    <p class="results-text">購入回数：${investmentCount} 回</p>
+    <p class="results-text">総購入金額：${totalInvestment.toLocaleString('ja-JP')} 円</p>
+    <p class="results-important">現在の評価額：${roundedTotalValue.toLocaleString('ja-JP')} 円</p>
+    <p class="results-important">倍率：${investmentMultiple.toFixed(2)}倍</p>
+    <p class="results-btc">保有BTC：${totalBitcoinPurchased.toFixed(8)} BTC</p>
+    <details class="detail-history-d">
+        <summary class="detail-history-s">購入履歴の詳細</summary>
+        <table>
+            <thead>
+                <tr>
+                    <th>日付</th>
+                    <th>BTC価格 (円)</th>
+                    <th>購入量 (BTC)</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${investmentDetails}
+            </tbody>
+        </table>
+        <p style="font-size: small; margin-top: 20px; margin-bottom: 20px;">
+        ※ 価格データが存在しない日付の場合、翌日に購入しています
+    </p>
+    </details>
+`;
 }
