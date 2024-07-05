@@ -295,7 +295,17 @@ td:nth-child(2) {
         font-size: 0.9375rem;
         margin-top: 6px;
     }
-    
+
+}
+
+.tsumitatetoko-svg {
+    width: 220px;
+    height: 51px;
+    mask-image: url('./images/tsumitatetoko.svg');
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-position: center;
+    background-color: var(--tsumitatetoko);
 }
 
 .flex-ref {
@@ -311,10 +321,6 @@ td:nth-child(2) {
     font-size: 0.85rem;
     width: 100%;
     padding-right: 8px;
-}
-
-svg {
-    fill: var(--tsumitatetoko);
 }
 
 @media (prefers-color-scheme: light) {
