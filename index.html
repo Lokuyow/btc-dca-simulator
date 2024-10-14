@@ -1,165 +1,140 @@
 <!DOCTYPE html>
 <html lang="ja">
-
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
-
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
     <title>今日からビットコ</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="ビットコイン（Bitcoin, BTC）のドルコスト平均法に基づく積み立て効果をシミュレーション。過去の価格データを用いて、長期的なビットコイン投資のパフォーマンスを評価します。">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ビットコイン（Bitcoin, BTC）のドルコスト平均法に基づく積み立て効果をシミュレーション。過去の価格データを用いて、長期的なビットコイン投資のパフォーマンスを評価します。" />
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-S139EYZLD9"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-S139EYZLD9');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-S139EYZLD9");
     </script>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png">
-    <link rel="manifest" href="./favicons/site.webmanifest">
-    <link rel="mask-icon" href="./favicons/safari-pinned-tab.svg" color="#f7931a">
-    <link rel="shortcut icon" href="./favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#f7931a">
-    <meta name="msapplication-config" content="./favicons/browserconfig.xml">
-    <meta name="theme-color" content="#f7931a">
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png" />
+    <link rel="manifest" href="./favicons/site.webmanifest" />
+    <link rel="mask-icon" href="./favicons/safari-pinned-tab.svg" color="#f7931a" />
+    <link rel="shortcut icon" href="./favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#f7931a" />
+    <meta name="msapplication-config" content="./favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#f7931a" />
 
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="今日からビットコ">
+    <meta name="apple-mobile-web-app-title" content="今日からビットコ" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-</head>
+  </head>
 
-<body>
-    <div class="page-container">
-        <div class="content">
-            <div class="subtitle">
-                ビットコインのドルコスト平均法シミュレータ
-            </div>
-            <div class="title">
-                今日からビットコ
-            </div>
-            <div class="description-t">
-                もし<wbr>あの日から<wbr>ビットコインを<wbr>積み立てていたら
-            </div>
-            <details class="example-d">
-                <summary class="example-s">例えば…</summary>
-                <ul class="example-ul1">
-                    <li>ビットコインを知った日</li>
-                    <ul class="example-ul2">
-                        <li>
-                            <div class="date-example">2014年2月28日</div>：マウントゴックス事件
-                        </li>
-                    </ul>
-                    <li>買うか悩んでやめた日</li>
-                    <ul class="example-ul2">
-                        <li>
-                            <div class="date-example">2017年12月7日</div>：～19年最高値
-                        </li>
-                        <li>
-                            <div class="date-example">2018年1月26日</div>：コインチェック事件
-                        </li>
-                    </ul>
-                    <li>口座開設したけど結局何もしなかった日</li>
-                    <ul class="example-ul2">
-                        <li>
-                            <div class="date-example">2020年2月20日</div>：コロナショック
-                        </li>
-                    </ul>
-                    <li>買ったけど手放してしまった日</li>
-                    <ul class="example-ul2">
-                        <li>
-                            <div class="date-example">2021年11月9日</div>：20～23年最高値
-                        </li>
-                        <li>
-                            <div class="date-example">2022年11月14日</div>：FTX事件
-                        </li>
-                    </ul>
-                </ul>
-            </details>
-            <form id="investmentForm">
+  <body>
+    <header>
+      <div class="subtitle">ビットコインのドルコスト平均法シミュレータ</div>
+      <h1>今日からビットコ</h1>
+      <div class="description-t">もし<wbr />あの日から<wbr />ビットコインを<wbr />積み立てていたら</div>
+    </header>
 
-                <div class="purchaseFrequency" for="purchaseFrequency">間隔</div>
-                <div id="purchaseFrequency">
-                    <div class="radioButton">
-                        <input type="radio" id="monthly" name="purchaseFrequency" value="monthly" checked>
-                        <label for="monthly" class="purchaseFrequency-label">毎月</label>
-                    </div>
-                    <div class="radioButton">
-                        <input type="radio" id="weekly" name="purchaseFrequency" value="weekly">
-                        <label for="weekly" class="purchaseFrequency-label">毎週</label>
-                    </div>
-                    <div class="radioButton">
-                        <input type="radio" id="daily" name="purchaseFrequency" value="daily">
-                        <label for="daily" class="purchaseFrequency-label">毎日</label>
-                    </div>
-                </div>
-
-                <label for="startDate">開始日</label>
-                <input type="date" id="startDate" value="2014-04-01" min="2011-08-18" required>
-
-                <label for="endDate">終了日</label>
-                <input type="date" id="endDate" min="2011-08-18" required style="visibility: hidden;">
-
-                <label for="amount">金額 (円)</label>
-                <input type="text" id="amount" value="10,000" inputmode="numeric" required>
-
-                <button id="submitBtn" type="submit">
-                    <span class="button-text">シミュレート</span>
-                    <div class="spinner-wrapper">
-                        <div class="spinner"></div>
-                    </div>
-                </button>
-
-            </form>
-
-            <div id="results" class="results-container">
-                <!-- 結果 -->
-            </div>
+    <main>
+      <details class="example-d">
+        <summary class="example-s">例えば…</summary>
+        <ul class="example-ul1">
+          <li>ビットコインを知った日</li>
+          <ul class="example-ul2">
+            <li>
+              <div class="date-example">2014年2月28日</div>
+              ：マウントゴックス事件
+            </li>
+          </ul>
+          <li>買うか悩んでやめた日</li>
+          <ul class="example-ul2">
+            <li>
+              <div class="date-example">2017年12月7日</div>
+              ：～19年最高値
+            </li>
+            <li>
+              <div class="date-example">2018年1月26日</div>
+              ：コインチェック事件
+            </li>
+          </ul>
+          <li>口座開設したけど結局何もしなかった日</li>
+          <ul class="example-ul2">
+            <li>
+              <div class="date-example">2020年2月20日</div>
+              ：コロナショック
+            </li>
+          </ul>
+          <li>買ったけど手放してしまった日</li>
+          <ul class="example-ul2">
+            <li>
+              <div class="date-example">2021年11月9日</div>
+              ：20～23年最高値
+            </li>
+            <li>
+              <div class="date-example">2022年11月14日</div>
+              ：FTX事件
+            </li>
+          </ul>
+        </ul>
+      </details>
+      <form id="investmentForm">
+        <div class="purchaseFrequency" for="purchaseFrequency">間隔</div>
+        <div id="purchaseFrequency">
+          <div class="radioButton">
+            <input type="radio" id="monthly" name="purchaseFrequency" value="monthly" checked />
+            <label for="monthly" class="purchaseFrequency-label">毎月</label>
+          </div>
+          <div class="radioButton">
+            <input type="radio" id="weekly" name="purchaseFrequency" value="weekly" />
+            <label for="weekly" class="purchaseFrequency-label">毎週</label>
+          </div>
+          <div class="radioButton">
+            <input type="radio" id="daily" name="purchaseFrequency" value="daily" />
+            <label for="daily" class="purchaseFrequency-label">毎日</label>
+          </div>
         </div>
 
-        <div class="footer">
-            <div class="links">
-                <div class="subject">
-                    関連サイト
-                </div>
+        <label for="startDate">開始日</label>
+        <input type="date" id="startDate" value="2014-04-01" min="2011-08-18" required />
 
-                <div class="subtitle-l">
-                    ビットコイン積立アプリ
-                </div>
+        <label for="endDate">終了日</label>
+        <input type="date" id="endDate" min="2011-08-18" required style="visibility: hidden" />
 
-                <a href="https://tsumitatetoko.com/" target="_blank" aria-label="ビットコイン積立アプリ つみたてとこ">
-                    <div class="tsumitatetoko-svg"></div>
-                </a>
+        <label for="amount">金額 (円)</label>
+        <input type="text" id="amount" value="10,000" inputmode="numeric" required />
 
-                <div class="description-l">
-                    設定した<wbr>スケジュール<wbr>および<wbr>金額で<wbr>ビットコインの<wbr>積み立てができる<wbr>アプリです。
-                </div>
-                <div class="operating-company">
-                    株式会社 AndGo
-                </div>
+        <button id="submitBtn" type="submit">
+          <span class="button-text">シミュレート</span>
+          <div class="spinner-wrapper">
+            <div class="spinner"></div>
+          </div>
+        </button>
+      </form>
 
-            </div>
+      <div id="results" class="results-container">
+        <!-- 結果 -->
+      </div>
+    </main>
 
-            <div class="flex-ref">
-                <div class="reference">
-                    サイト制作：<a href="https://lokuyow.github.io" target="_blank">ロクヨウ</a><br>
-                    ソースコード：<a href="https://github.com/Lokuyow/btc-dca-simulator" target="_blank">GitHub</a><br>
-                    データ提供：<a href="https://bitbank.cc/" target="_blank">bitbank</a><br>
-                </div>
-            </div>
+    <div class="footer">
+      <div class="flex-ref">
+        <div class="reference">
+          サイト制作：<a href="https://lokuyow.github.io" target="_blank">ロクヨウ</a><br />
+          ソースコード：<a href="https://github.com/Lokuyow/btc-dca-simulator" target="_blank">GitHub</a><br />
+          データ提供：<a href="https://bitbank.cc/" target="_blank">bitbank</a><br />
         </div>
+      </div>
     </div>
 
     <script src="main.js"></script>
-</body>
-
+  </body>
 </html>
