@@ -98,10 +98,11 @@ async function fetchLatestPrice() {
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
-    return parseInt(data.data.last, 10); // 最終取引価格を返す
+    const timestamp = new Date(data.data.timestamp); // タイムスタンプを取得してDateオブジェクトに変換
+    return { price: parseInt(data.data.last, 10), timestamp }; // 最終取引価格とタイムスタンプを返す
   } catch (error) {
     console.error("ビットコイン価格の取得に失敗しました:", error);
-    return 0; // エラー時は0を返す
+    return { price: 0, timestamp: null }; // エラー時は0とnullを返す
   }
 }
 
@@ -124,7 +125,9 @@ async function fetchBitcoinData(startDate, endDate, investmentAmount) {
   const apiPromises = [];
   const localDataPromises = [];
 
-  const latestPrice = await fetchLatestPrice();
+  const latestData = await fetchLatestPrice();
+  const latestPrice = latestData.price;
+  const latestTimestamp = latestData.timestamp;
 
   // 2017年より前のデータをローカルから取得
   for (let year = startYear; year < 2017 && year <= endYear; year++) {
@@ -150,7 +153,7 @@ async function fetchBitcoinData(startDate, endDate, investmentAmount) {
       const validResults = results.filter((result) => result !== null);
       const allData = validResults.flatMap((result) => (result.data ? result.data.candlestick[0].ohlcv : result));
       const formattedData = formatDailyDataBitBank(allData);
-      displayResults(formattedData, investmentAmount, startDate, endDate, latestPrice);
+      displayResults(formattedData, investmentAmount, startDate, endDate, latestPrice, latestTimestamp);
     })
     .catch((error) => {
       console.error("Error fetching data: ", error);
@@ -169,11 +172,10 @@ function createPriceMap(prices) {
   }, {});
 }
 
-async function displayResults(data, investmentAmount, startDate, endDate) {
-  const latestPrice = await fetchLatestPrice();
+async function displayResults(data, investmentAmount, startDate, endDate, latestPrice, latestTimestamp) {
   const priceMap = createPriceMap(data.prices);
   const { totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails } = processInvestments(investmentAmount, startDate, endDate, priceMap);
-  updateResultsDisplay(totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails, latestPrice);
+  updateResultsDisplay(totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails, latestPrice, latestTimestamp);
 }
 
 function getNextInvestmentDate(currentDate, purchaseFrequency) {
@@ -250,16 +252,19 @@ function updateInvestmentResult(investmentDetail, investmentDetails, totalInvest
   return { totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails };
 }
 
-function updateResultsDisplay(totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails, latestPrice) {
+function updateResultsDisplay(totalInvestment, totalBitcoinPurchased, investmentCount, investmentDetails, latestPrice, latestTimestamp) {
   const totalValue = totalBitcoinPurchased * latestPrice;
   const investmentMultiple = totalValue / totalInvestment;
   const roundedTotalValue = Math.round(totalValue);
+  const formattedTimestamp = latestTimestamp ? `${latestTimestamp.getFullYear()}年${latestTimestamp.getMonth() + 1}月${latestTimestamp.getDate()}日 ${latestTimestamp.getHours()}時${latestTimestamp.getMinutes()}分${latestTimestamp.getSeconds()}秒` : "取得不可";
+
   document.getElementById("results").innerHTML = `
     <h2 class="results-header">結果</h2>
     <p class="results-text">購入回数：${investmentCount} 回</p>
     <p class="results-text">総購入金額：${totalInvestment.toLocaleString("ja-JP")} 円</p>
-    <p class="results-important">現在の評価額：${roundedTotalValue.toLocaleString("ja-JP")} 円</p>
-    <p class="results-important">倍率：${investmentMultiple.toFixed(2)}倍</p>
+    <p class="results-timestamp">${formattedTimestamp}</p>
+    <p class="results-important1">現在の評価額：${roundedTotalValue.toLocaleString("ja-JP")} 円</p>
+    <p class="results-important2">倍率：${investmentMultiple.toFixed(2)}倍</p>
     <p class="results-btc">保有BTC：${totalBitcoinPurchased.toFixed(8)} BTC</p>
     <details class="detail-history-d">
         <summary class="detail-history-s">購入履歴の詳細</summary>

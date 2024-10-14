@@ -59,7 +59,7 @@ h1 {
 
 main {
   flex: 1;
-  margin: 0 16px 24px 16px;
+  margin: 8px 16px 24px 16px;
 }
 
 .example-d {
@@ -199,7 +199,7 @@ input[type="text"] {
 }
 
 p {
-  margin: 5px 0;
+  margin: 6px 0;
 }
 
 .results-container {
@@ -210,7 +210,7 @@ p {
 }
 
 .results-header {
-  font-size: 1.7rem;
+  font-size: 2.2rem;
   font-weight: bold;
   margin: 0 0 12px 0;
 }
@@ -220,7 +220,17 @@ p {
   font-weight: normal;
 }
 
-.results-important {
+.results-timestamp {
+  margin: 10px 0 -3px 0;
+}
+
+.results-important1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 6px 0;
+}
+
+.results-important2 {
   font-size: 1.5rem;
   font-weight: bold;
 }
