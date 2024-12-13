@@ -301,3 +301,7 @@ td:nth-child(2) {
     --subject-text-color: #bfbfbf;
   }
 }
+
+.zap {
+  margin: 6px 0;
+}
