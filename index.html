@@ -1,206 +1,145 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head
-    prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#"
-  >
-    <title>今日からビットコ</title>
 
-    <link rel="stylesheet" href="style.css" />
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+  <title>今日からビットコ</title>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="ビットコイン（Bitcoin, BTC）のドルコスト平均法に基づく積み立て効果をシミュレーション。過去の価格データを用いて、長期的なビットコイン投資のパフォーマンスを評価します。"
-    />
+  <link rel="stylesheet" href="style.css" />
 
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-S139EYZLD9"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-S139EYZLD9");
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="ビットコイン（Bitcoin, BTC）のドルコスト平均法に基づく積み立て効果をシミュレーション。過去の価格データを用いて、長期的なビットコイン投資のパフォーマンスを評価します。" />
 
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="./favicons/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./favicons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="./favicons/favicon-16x16.png"
-    />
-    <link rel="manifest" href="./favicons/site.webmanifest" />
-    <link
-      rel="mask-icon"
-      href="./favicons/safari-pinned-tab.svg"
-      color="#f7931a"
-    />
-    <link rel="shortcut icon" href="./favicons/favicon.ico" />
-    <meta name="msapplication-TileColor" content="#f7931a" />
-    <meta name="msapplication-config" content="./favicons/browserconfig.xml" />
-    <meta name="theme-color" content="#f7931a" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S139EYZLD9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-S139EYZLD9");
+  </script>
 
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="今日からビットコ" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  </head>
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png" />
+  <link rel="manifest" href="./favicons/site.webmanifest" />
+  <link rel="mask-icon" href="./favicons/safari-pinned-tab.svg" color="#f7931a" />
+  <link rel="shortcut icon" href="./favicons/favicon.ico" />
+  <meta name="msapplication-TileColor" content="#f7931a" />
+  <meta name="msapplication-config" content="./favicons/browserconfig.xml" />
+  <meta name="theme-color" content="#f7931a" />
 
-  <body>
-    <header>
-      <div class="subtitle">ビットコインのドルコスト平均法シミュレータ</div>
-      <h1>今日からビットコ</h1>
-      <div class="description-t">
-        もし<wbr />あの日から<wbr />ビットコインを<wbr />積み立てていたら
-      </div>
-    </header>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="今日からビットコ" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+</head>
 
-    <main>
-      <details class="example-d">
-        <summary class="example-s">例えば…</summary>
-        <ul class="example-ul1">
-          <li>ビットコインを知った日</li>
-          <ul class="example-ul2">
-            <li>
-              <div class="date-example">2014年2月28日</div>
-              ：マウントゴックス事件
-            </li>
-          </ul>
-          <li>買うか悩んでやめた日</li>
-          <ul class="example-ul2">
-            <li>
-              <div class="date-example">2017年12月7日</div>
-              ：～19年最高値
-            </li>
-            <li>
-              <div class="date-example">2018年1月26日</div>
-              ：コインチェック事件
-            </li>
-          </ul>
-          <li>口座開設したけど結局何もしなかった日</li>
-          <ul class="example-ul2">
-            <li>
-              <div class="date-example">2020年2月20日</div>
-              ：コロナショック
-            </li>
-          </ul>
-          <li>買ったけど手放してしまった日</li>
-          <ul class="example-ul2">
-            <li>
-              <div class="date-example">2021年11月9日</div>
-              ：20～23年最高値
-            </li>
-            <li>
-              <div class="date-example">2022年11月14日</div>
-              ：FTX事件
-            </li>
-          </ul>
+<body>
+  <header>
+    <div class="subtitle">ビットコインのドルコスト平均法シミュレータ</div>
+    <h1>今日からビットコ</h1>
+    <div class="description-t">
+      もし<wbr />あの日から<wbr />ビットコインを<wbr />積み立てていたら
+    </div>
+  </header>
+
+  <main>
+    <details class="example-d">
+      <summary class="example-s">例えば…</summary>
+      <ul class="example-ul1">
+        <li>ビットコインを知った日</li>
+        <ul class="example-ul2">
+          <li>
+            <div class="date-example">2014年2月28日</div>
+            ：マウントゴックス事件
+          </li>
         </ul>
-      </details>
-      <form id="investmentForm">
-        <div class="purchaseFrequency" for="purchaseFrequency">間隔</div>
-        <div id="purchaseFrequency">
-          <div class="radioButton">
-            <input
-              type="radio"
-              id="monthly"
-              name="purchaseFrequency"
-              value="monthly"
-              checked
-            />
-            <label for="monthly" class="purchaseFrequency-label">毎月</label>
-          </div>
-          <div class="radioButton">
-            <input
-              type="radio"
-              id="weekly"
-              name="purchaseFrequency"
-              value="weekly"
-            />
-            <label for="weekly" class="purchaseFrequency-label">毎週</label>
-          </div>
-          <div class="radioButton">
-            <input
-              type="radio"
-              id="daily"
-              name="purchaseFrequency"
-              value="daily"
-            />
-            <label for="daily" class="purchaseFrequency-label">毎日</label>
-          </div>
+        <li>買うか悩んでやめた日</li>
+        <ul class="example-ul2">
+          <li>
+            <div class="date-example">2017年12月7日</div>
+            ：～19年最高値
+          </li>
+          <li>
+            <div class="date-example">2018年1月26日</div>
+            ：コインチェック事件
+          </li>
+        </ul>
+        <li>口座開設したけど結局何もしなかった日</li>
+        <ul class="example-ul2">
+          <li>
+            <div class="date-example">2020年2月20日</div>
+            ：コロナショック
+          </li>
+        </ul>
+        <li>買ったけど手放してしまった日</li>
+        <ul class="example-ul2">
+          <li>
+            <div class="date-example">2021年11月9日</div>
+            ：20～23年最高値
+          </li>
+          <li>
+            <div class="date-example">2022年11月14日</div>
+            ：FTX事件
+          </li>
+        </ul>
+      </ul>
+    </details>
+    <form id="investmentForm">
+      <div class="purchaseFrequency" for="purchaseFrequency">間隔</div>
+      <div id="purchaseFrequency">
+        <div class="radioButton">
+          <input type="radio" id="monthly" name="purchaseFrequency" value="monthly" checked />
+          <label for="monthly" class="purchaseFrequency-label">毎月</label>
         </div>
-
-        <label for="startDate">開始日</label>
-        <input
-          type="date"
-          id="startDate"
-          value="2014-04-01"
-          min="2011-08-18"
-          required
-        />
-
-        <label for="endDate">終了日</label>
-        <input
-          type="date"
-          id="endDate"
-          min="2011-08-18"
-          required
-          style="visibility: hidden"
-        />
-
-        <label for="amount">金額 (円)</label>
-        <input
-          type="text"
-          id="amount"
-          value="10,000"
-          inputmode="numeric"
-          required
-        />
-
-        <button id="submitBtn" type="submit">
-          <span class="button-text">シミュレート</span>
-          <div class="spinner-wrapper">
-            <div class="spinner"></div>
-          </div>
-        </button>
-      </form>
-
-      <div id="results" class="results-container">
-        <!-- 結果 -->
+        <div class="radioButton">
+          <input type="radio" id="weekly" name="purchaseFrequency" value="weekly" />
+          <label for="weekly" class="purchaseFrequency-label">毎週</label>
+        </div>
+        <div class="radioButton">
+          <input type="radio" id="daily" name="purchaseFrequency" value="daily" />
+          <label for="daily" class="purchaseFrequency-label">毎日</label>
+        </div>
       </div>
-    </main>
 
-    <div class="footer">
-      <div class="flex-ref">
-        <div class="reference">
-          <div class="zap">
-            <div
-              style="
+      <label for="startDate">開始日</label>
+      <input type="date" id="startDate" value="2014-04-01" min="2011-08-18" required />
+
+      <label for="endDate">終了日</label>
+      <input type="date" id="endDate" min="2011-08-18" required style="visibility: hidden" />
+
+      <label for="amount">金額 (円)</label>
+      <input type="text" id="amount" value="10,000" inputmode="numeric" required />
+
+      <button id="submitBtn" type="submit">
+        <span class="button-text">シミュレート</span>
+        <div class="spinner-wrapper">
+          <div class="spinner"></div>
+        </div>
+      </button>
+    </form>
+
+    <div id="results" class="results-container">
+      <!-- 結果 -->
+    </div>
+  </main>
+
+  <div class="footer">
+    <div class="flex-ref">
+      <div class="reference">
+        <div class="zap">
+          <div style="
                 display: inline-flex;
                 border-radius: 6px;
                 overflow: hidden;
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-              "
-            >
-              <button
-                style="
+              ">
+            <button style="
                   background: #4b5563;
                   border: none;
                   border-right: 1px solid rgba(255, 255, 255, 0.15);
@@ -216,17 +155,12 @@
                   min-width: 60px;
                   height: 32px;
                   -webkit-tap-highlight-color: transparent;
-                "
-                onmouseover="this.style.background='#6B7280'"
-                onmouseout="this.style.background='#4B5563'"
-                data-npub="npub1a3pvwe2p3v7mnjz6hle63r628wl9w567aw7u23fzqs062v5vqcqqu3sgh3"
-                data-note-id="note1xr46s38uzxd0wc0lxdntd26g5t3y03hh80k9yl53xql60tjcudzq0y8up0"
-                data-relays="wss://relay.nostr.band,wss://relay.damus.io,wss://nos.lol,wss://nostr.bitcoiner.social,wss://relay.nostr.wirednet.jp,wss://yabu.me"
-              >
-                Zap
-              </button>
-              <button
-                style="
+                " data-npub="npub1a3pvwe2p3v7mnjz6hle63r628wl9w567aw7u23fzqs062v5vqcqqu3sgh3"
+              data-note-id="note1xr46s38uzxd0wc0lxdntd26g5t3y03hh80k9yl53xql60tjcudzq0y8up0"
+              data-relays="wss://relay.nostr.band,wss://relay.damus.io,wss://nos.lol,wss://nostr.bitcoiner.social,wss://relay.nostr.wirednet.jp,wss://yabu.me">
+              Zap
+            </button>
+            <button style="
                   background: #4b5563;
                   border: none;
                   border-left: 1px solid rgba(255, 255, 255, 0.15);
@@ -242,35 +176,26 @@
                   min-width: 60px;
                   height: 32px;
                   -webkit-tap-highlight-color: transparent;
-                "
-                onmouseover="this.style.background='#6B7280'"
-                onmouseout="this.style.background='#4B5563'"
-                data-title="Thanks for the Zaps!"
-                data-nzv-id="nevent1qqsrp6aggn7prxhhv8lnxe4k4dy29cj8cmmnhmzj06gnq0a84evwx3qh64vfv"
-                data-zap-color-mode="true"
-                data-relay-urls="wss://relay.nostr.band,wss://relay.damus.io,wss://nos.lol,wss://nostr.bitcoiner.social,wss://relay.nostr.wirednet.jp,wss://yabu.me"
-              >
-                View
-              </button>
-            </div>
+                " data-title="Thanks for the Zaps!"
+              data-nzv-id="nevent1qqsrp6aggn7prxhhv8lnxe4k4dy29cj8cmmnhmzj06gnq0a84evwx3qh64vfv"
+              data-zap-color-mode="true"
+              data-relay-urls="wss://relay.nostr.band,wss://relay.damus.io,wss://nos.lol,wss://nostr.bitcoiner.social,wss://relay.nostr.wirednet.jp,wss://yabu.me">
+              View
+            </button>
           </div>
-
-          サイト制作：<a href="https://lokuyow.github.io" target="_blank"
-            >ロクヨウ</a
-          ><br />
-          ソースコード：<a
-            href="https://github.com/Lokuyow/btc-dca-simulator"
-            target="_blank"
-            >GitHub</a
-          ><br />
-          データ提供：<a href="https://bitbank.cc/" target="_blank">bitbank</a
-          ><br />
         </div>
+
+        サイト制作：<a href="https://lokuyow.github.io" target="_blank">ロクヨウ</a><br />
+        ソースコード：<a href="https://github.com/Lokuyow/btc-dca-simulator" target="_blank">GitHub</a><br />
+        データ提供：<a href="https://bitbank.cc/" target="_blank">bitbank</a><br />
       </div>
     </div>
+  </div>
 
-    <script src="./lib/nostr-zap@1.1.0.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/nostr-zap-view@1"></script>
-    <script src="main.js"></script>
-  </body>
+  <!-- <script src="./lib/nostr-zap@1.1.0.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/nostr-zap@1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/nostr-zap-view@1"></script>
+  <script src="main.js"></script>
+</body>
+
 </html>
