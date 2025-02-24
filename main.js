@@ -255,7 +255,7 @@ function updateInvestmentResult(investmentDetail, investmentDetails, totalInvest
 function convertToJapaneseUnit(number) {
   const formatter = new Intl.NumberFormat('ja-JP', {
     notation: 'compact',
-    maximumFractionDigits: 2,
+    maximumSignificantDigits: 4,
     compactDisplay: 'short'
   });
   return formatter.format(number);
@@ -287,7 +287,7 @@ function updateResultsDisplay(totalInvestment, totalBitcoinPurchased, investment
 
     <div class="result-ref result-total">${roundedTotalValue.toLocaleString("ja-JP")} 円</div>
 
-    <div class="result-flex">
+    <div class="result-flex result-multiple">
       <div class="result-text result-important">倍率：</div>
       <div class="result-value result-important">${investmentMultiple.toFixed(2)}倍</div>
     </div>

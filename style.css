@@ -218,7 +218,8 @@ p {
 .result-grid {
   display: grid;
   grid-template-columns: auto auto;
-  margin: 20px 0;
+  align-items: center;
+  margin: 16px 0;
 }
 
 .result-text {
@@ -240,22 +241,22 @@ p {
 }
 
 .result-text.result-important {
-  font-size: 1.3rem;
+  font-size: 1.45rem;
   font-weight: normal;
 }
 
 .result-value.result-important {
-  font-size: 1.9rem;
+  font-size: 2.2rem;
 }
 
 .result-timestamp {
   font-size: 0.9rem;
-  margin: 16px 0 -4px 0;
+  margin: 12px 0 -4px 0;
 }
 
 .result-total {
   font-size: 1rem;
-  margin: -4px 0 16px 0;
+  margin: -4px 0 12px 0;
 }
 
 .result-important {
@@ -263,9 +264,8 @@ p {
   font-weight: bold;
 }
 
-.result-important2 {
-  font-size: 1.5rem;
-  font-weight: bold;
+.result-multiple {
+  margin: 6px 0;
 }
 
 .detail-history-s {
