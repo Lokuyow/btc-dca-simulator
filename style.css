@@ -35,7 +35,7 @@ body {
   min-height: 100%;
 }
 
-button > * {
+button>* {
   pointer-events: none;
 }
 
@@ -111,7 +111,7 @@ main {
   margin: 14px 0 28px 0;
 }
 
-#investmentForm > *:nth-child(2n + 1) {
+#investmentForm>*:nth-child(2n + 1) {
   text-align: right;
 }
 
@@ -209,35 +209,63 @@ p {
   width: 100%;
 }
 
-.results-header {
+.result-header {
   font-size: 2.2rem;
   font-weight: bold;
-  margin: 0 0 12px 0;
+  margin: 0;
 }
 
-.results-text {
-  font-size: 1.4rem;
+.result-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin: 20px 0;
+}
+
+.result-text {
+  justify-self: right;
+}
+
+.result-value {
+  justify-self: left;
+}
+
+.result-investment,
+.result-bitcoin {
+  font-size: 1.3rem;
+}
+
+.result-flex {
+  display: flex;
+  align-items: center;
+}
+
+.result-text.result-important {
+  font-size: 1.3rem;
   font-weight: normal;
 }
 
-.results-timestamp {
-  margin: 10px 0 -3px 0;
+.result-value.result-important {
+  font-size: 1.9rem;
 }
 
-.results-important1 {
+.result-timestamp {
+  font-size: 0.9rem;
+  margin: 16px 0 -4px 0;
+}
+
+.result-total {
+  font-size: 1rem;
+  margin: -4px 0 16px 0;
+}
+
+.result-important {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.result-important2 {
   font-size: 1.5rem;
   font-weight: bold;
-  margin: 0 0 6px 0;
-}
-
-.results-important2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.results-btc {
-  font-size: 1.4rem;
-  font-weight: normal;
 }
 
 .detail-history-s {
