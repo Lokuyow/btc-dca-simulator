@@ -266,36 +266,39 @@ function updateResultsDisplay(totalInvestment, totalBitcoinPurchased, investment
   const investmentMultiple = totalValue / totalInvestment;
   const roundedTotalValue = Math.round(totalValue);
   const averagePurchasePrice = Math.round(totalInvestment / totalBitcoinPurchased);
-  const formattedTimestamp = latestTimestamp ? `${latestTimestamp.getFullYear()}年${latestTimestamp.getMonth() + 1}月${latestTimestamp.getDate()}日 ${latestTimestamp.getHours()}時${latestTimestamp.getMinutes()}分${latestTimestamp.getSeconds()}秒` : "取得不可";
+  const formattedTimestamp = latestTimestamp ? `${latestTimestamp.getFullYear()}年${latestTimestamp.getMonth() + 1}月${latestTimestamp.getDate()}日${latestTimestamp.getHours()}時${latestTimestamp.getMinutes()}分` : "取得不可";
 
   document.getElementById("results").innerHTML = `
     <h2 class="result-header">結果</h2>
 
     <div class="result-grid result-investment">
-      <div class="result-text">購入回数：</div>
+      <div class="result-text">購入回数</div>
       <div class="result-value">${investmentCount} 回</div>
-      <div class="result-text">総購入金額：</div>
+      <div class="result-text">総購入金額</div>
       <div class="result-value">${totalInvestment.toLocaleString("ja-JP")} 円</div>
     </div>
 
-    <div class="result-ref result-timestamp">${formattedTimestamp}</div>
+    <div class="result-main">
+      <div class="result-flex">
+        <div class="result-text result-important">現在の評価額</div>
+        <div class="result-value result-important">${convertToJapaneseUnit(roundedTotalValue)}円</div>
+      </div>
 
-    <div class="result-flex">
-      <div class="result-text result-important">現在の評価額：</div>
-      <div class="result-value result-important">${convertToJapaneseUnit(roundedTotalValue)}円</div>
-    </div>
+      <div class="result-flex result-ditail">
+        <div class="result-ref result-timestamp">${formattedTimestamp}</div>
+        <div class="result-ref result-total">${roundedTotalValue.toLocaleString("ja-JP")} 円</div>
+      </div>
 
-    <div class="result-ref result-total">${roundedTotalValue.toLocaleString("ja-JP")} 円</div>
-
-    <div class="result-flex result-multiple">
-      <div class="result-text result-important">倍率：</div>
-      <div class="result-value result-important">${investmentMultiple.toFixed(2)}倍</div>
+      <div class="result-flex result-multiple">
+        <div class="result-text result-important">倍率</div>
+        <div class="result-value result-important">${investmentMultiple.toFixed(2)}倍</div>
+      </div>
     </div>
 
     <div class="result-grid result-bitcoin">
-      <div class="result-text">保有BTC：</div>
+      <div class="result-text">保有BTC</div>
       <div class="result-value">${totalBitcoinPurchased.toFixed(6)} BTC</div>
-      <div class="result-text">平均取得価格：</div>
+      <div class="result-text">平均取得単価</div>
       <div class="result-value">${averagePurchasePrice.toLocaleString("ja-JP")} 円</div>
     </div>
 

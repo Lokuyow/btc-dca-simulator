@@ -40,7 +40,7 @@ button>* {
 }
 
 h1 {
-  font-size: 2.3rem;
+  font-size: 2rem;
   font-weight: bold;
   margin: 0;
 }
@@ -210,20 +210,20 @@ p {
 }
 
 .result-header {
-  font-size: 2.2rem;
   font-weight: bold;
-  margin: 0;
+  margin: 0 0 12px 0;
 }
 
 .result-grid {
   display: grid;
   grid-template-columns: auto auto;
   align-items: center;
-  margin: 16px 0;
+  margin: 12px 0;
 }
 
 .result-text {
   justify-self: right;
+  margin-right: 10px;
 }
 
 .result-value {
@@ -235,28 +235,25 @@ p {
   font-size: 1.3rem;
 }
 
+.result-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 8px 0;
+}
+
 .result-flex {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 
 .result-text.result-important {
-  font-size: 1.45rem;
+  font-size: 1.3rem;
   font-weight: normal;
 }
 
 .result-value.result-important {
-  font-size: 2.2rem;
-}
-
-.result-timestamp {
-  font-size: 0.9rem;
-  margin: 12px 0 -4px 0;
-}
-
-.result-total {
-  font-size: 1rem;
-  margin: -4px 0 12px 0;
+  font-size: 2.4rem;
 }
 
 .result-important {
@@ -264,15 +261,26 @@ p {
   font-weight: bold;
 }
 
-.result-multiple {
-  margin: 6px 0;
+.result-flex.result-ditail {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.result-ditail {
+  margin-top: -6px;
+  font-size: 1rem;
+
+  .result-timestamp {
+    margin-right: 8px;
+  }
 }
 
 .detail-history-s {
-  font-size: 1.1rem;
+  font-size: 1rem;
   width: max-content;
   cursor: pointer;
-  margin: 24px auto 18px auto;
+  margin: 30px auto 18px auto;
 }
 
 table {
