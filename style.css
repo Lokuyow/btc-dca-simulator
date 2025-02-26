@@ -301,7 +301,7 @@ td:nth-child(2) {
 
 .flex-ref {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   border-top: 2px solid var(--line-color);
   margin-bottom: 14px;
   padding-top: 20px;
@@ -311,7 +311,32 @@ td:nth-child(2) {
   text-align: right;
   font-size: 0.85rem;
   width: 100%;
-  padding-right: 8px;
+  margin: 0 12px;
+
+  .site {
+    width: auto;
+    white-space: nowrap;
+  }
+}
+
+/* バナー用のスタイル */
+.banner-link {
+  max-width: 260px;
+  width: auto;
+  height: auto;
+  margin: 0 12px;
+
+  .banner-image {
+    width: 100%;
+    height: auto;
+    border: #999 1px solid;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+}
+
+.banner-image:hover {
+  transform: scale(1.02);
 }
 
 @media (prefers-color-scheme: light) {
@@ -339,5 +364,5 @@ td:nth-child(2) {
 }
 
 .zap {
-  margin: 6px 0;
+  margin-bottom: 6px;
 }
